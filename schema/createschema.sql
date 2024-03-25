@@ -3,8 +3,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 CREATE TABLE "dim_date" (
-  "date_id" UUID PRIMARY KEY DEFAULT (uuid_generate_v4()),
-  "date" DATE,
+  "date" DATE PRIMARY KEY ,
   "day" INT,
   "month" INT,
   "year" INT
@@ -23,7 +22,7 @@ CREATE TABLE "dim_user" (
 
 CREATE TABLE "dim_document" (
   "document_id" VARCHAR(50) PRIMARY KEY,
-  "document_expiry_date_id" UUID
+  "document_expiry_date" DATE
 );
 
 CREATE TABLE "fact_interviews" (
@@ -34,7 +33,7 @@ CREATE TABLE "fact_interviews" (
 
 ALTER TABLE "dim_user" ADD FOREIGN KEY ("document_id") REFERENCES "dim_document" ("document_id");
 
-ALTER TABLE "dim_document" ADD FOREIGN KEY ("document_expiry_date_id") REFERENCES "dim_date" ("date_id");
+ALTER TABLE "dim_document" ADD FOREIGN KEY ("document_expiry_date") REFERENCES "dim_date" ("date");
 
 ALTER TABLE "fact_interviews" ADD FOREIGN KEY ("interview_status_id") REFERENCES "dim_interview_status" ("interview_status_id");
 
